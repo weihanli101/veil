@@ -23,10 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".ParamedicActivity"
             android:label="@string/title_activity_paramedic"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PatientActivity"
+            android:label="@string/title_activity_patient"
             android:theme="@style/AppTheme"></activity>
     </application>
 

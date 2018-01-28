@@ -336,7 +336,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else if (mEmail.equals("patient@a")) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, PatientActivity.class);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
