@@ -1,5 +1,6 @@
 package io.left.hellomesh;
 
+import android.widget.Button;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -100,6 +101,8 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
                     }
                 });
 
+                Button btnConfigurePar = (Button) findViewById(R.id.btnConfigurePar);
+                btnConfigurePar.setEnabled(true);
             } catch (RightMeshException e) {
                 return;
             }
@@ -122,6 +125,9 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
 
             if (role.equals("patient")) {
                 userInfo.put(event.peerUuid, new UserInfo(name, role));
+
+                TextView patientList = (TextView) findViewById(R.id.patientData);
+                patientList.append("Peer Id: " + event.peerUuid + "\n" + new String(event.data) + "\n\n");
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -170,7 +176,7 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
      *
      * @param v calling view
      */
-    public void configure(View v)
+    public void configurePar(View v)
     {
         try {
             mm.showSettingsActivity();
