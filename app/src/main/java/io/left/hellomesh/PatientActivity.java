@@ -104,6 +104,7 @@ public class PatientActivity extends AppCompatActivity implements MeshStateListe
         String peerUuid = String.valueOf(event.peerUuid);
         String data = new String(event.data);
         String[] args = data.split(";");
+        System.out.println("event from Paramedic: " + event.data);
 
         if (args[0].equals("receiveInfo")) {
             String name = args[1];
@@ -128,6 +129,7 @@ public class PatientActivity extends AppCompatActivity implements MeshStateListe
         MeshManager.PeerChangedEvent event = (MeshManager.PeerChangedEvent) e;
         if (event.state != REMOVED && !users.contains(event.peerUuid)) {
             users.add(event.peerUuid);
+            System.out.println("peer: " + String.valueOf(event.peerUuid));
 
             try {
                 mm.sendDataReliable(event.peerUuid, PORT, "getInfo".getBytes());

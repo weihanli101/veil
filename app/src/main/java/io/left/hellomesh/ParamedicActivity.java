@@ -119,6 +119,7 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         String peerUuid = String.valueOf(event.peerUuid);
         String data = new String(event.data);
         String[] args = data.split(";");
+        System.out.println("event from Patient: " + data);
 
         if (args[0].equals("receiveInfo")) {
             String name = args[1];
@@ -142,6 +143,7 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         MeshManager.PeerChangedEvent event = (MeshManager.PeerChangedEvent) e;
         if (event.state != REMOVED && !users.contains(event.peerUuid)) {
             users.add(event.peerUuid);
+            System.out.println("peer: " + String.valueOf(event.peerUuid));
             try {
                 mm.sendDataReliable(event.peerUuid, PORT, "getInfo".getBytes());
             } catch(RightMeshException re) {}
