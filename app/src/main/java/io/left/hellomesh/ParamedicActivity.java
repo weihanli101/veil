@@ -12,6 +12,7 @@ import android.app.Activity;
 import io.left.rightmesh.id.MeshID;
 
 import java.util.HashSet;
+import java.util.HashMap;
 
 import io.left.rightmesh.android.MeshService;
 import io.left.rightmesh.android.AndroidMeshManager;
@@ -26,9 +27,20 @@ import static io.left.rightmesh.mesh.MeshManager.PEER_CHANGED;
 import static io.left.rightmesh.mesh.MeshManager.REMOVED;
 
 public class ParamedicActivity extends Activity implements MeshStateListener {
+    private class UserInfo {
+       String name;
+       String role;
+
+       public UserInfo(String name, String role) {
+          this.name = name;
+          this.role = role;
+       }
+    }
+
     private static final int PORT = 9876;
     AndroidMeshManager mm = null;
     HashSet<MeshID> users = new HashSet<>();
+    HashMap<MeshID, UserInfo> userInfo = new HashMap<MeshID, UserInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +118,23 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         final MeshManager.DataReceivedEvent event = (MeshManager.DataReceivedEvent) e;
         String peerUuid = String.valueOf(event.peerUuid);
         String data = new String(event.data);
+        String[] args = data.split(";");
 
-        TextView patientList = (TextView) findViewById(R.id.patientData);
-        patientList.append("Peer Id: " + peerUuid + "\n" + data + "\n\n");
+        if (args[0].equals("receiveInfo")) {
+            String name = args[1];
+            String role = args[2];
+
+            if (role.equals("patient")) {
+                userInfo.put(event.peerUuid, new UserInfo(name, role));
+
+                TextView patientList = (TextView) findViewById(R.id.patientData);
+                patientList.append("Peer Id: " + peerUuid + "\n" + data + "\n\n");
+            }
+        } else if (args[0].equals("getInfo")) {
+            try {
+                mm.sendDataReliable(event.peerUuid, PORT, "receiveInfo;andy;paramedic;".getBytes());
+            } catch (RightMeshException re) {}
+        }
     }
 
     private void handlePeerChanged(MeshManager.RightMeshEvent e) {
@@ -116,8 +142,12 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         MeshManager.PeerChangedEvent event = (MeshManager.PeerChangedEvent) e;
         if (event.state != REMOVED && !users.contains(event.peerUuid)) {
             users.add(event.peerUuid);
+            try {
+                mm.sendDataReliable(event.peerUuid, PORT, "getInfo".getBytes());
+            } catch(RightMeshException re) {}
         } else if (event.state == REMOVED){
             users.remove(event.peerUuid);
+            userInfo.remove(event.peerUuid);
         }
 
 
@@ -125,8 +155,5 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         for (MeshID user : users) {
            output += user;
         }
-
-        TextView txtStatus = (TextView) findViewById(R.id.txtStatus);
-        txtStatus.setText(output);
     }
 }
