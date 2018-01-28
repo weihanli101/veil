@@ -7,24 +7,65 @@
     tools:context="io.left.hellomesh.ParamedicActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_layout"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/email_sign_in_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/icon_app"/>
+
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="false"
+            android:visibility="visible"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Polling for patients..."
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/patientData"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_margin="5dp"
+            android:background="#fff"
+            android:clickable="true"
+            android:drawableLeft="@drawable/memes"
+            android:drawablePadding="5dp"
+            android:elevation="4dp"
+            android:padding="20dp"
+            android:text="Patient: Mary Chow"
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="configure"
-            android:text="Button" />
+            android:layout_margin="5dp"
+            android:background="#fff"
+            android:clickable="true"
+            android:drawableLeft="@drawable/memes"
+            android:drawablePadding="5dp"
+            android:elevation="4dp"
+            android:padding="20dp"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="Patient: Emma Ngo"/>
 
     </LinearLayout>
 

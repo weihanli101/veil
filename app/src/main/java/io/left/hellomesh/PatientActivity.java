@@ -49,7 +49,6 @@ public class PatientActivity extends Activity implements MeshStateListener{
     protected void onDestroy() {
         try {
             super.onDestroy();
-            //shuts down Android Mesh Manager
             mm.stop();
         } catch (MeshService.ServiceDisconnectedException e) {
             e.printStackTrace();
@@ -92,7 +91,7 @@ public class PatientActivity extends Activity implements MeshStateListener{
         String[] args = data.split(";");
         System.out.println("event from Paramedic: " + event.data);
 
-       /* if (args[0].equals("receiveInfo")) {
+       if (args[0].equals("receiveInfo")) {
             String name = args[1];
             String role = args[2];
 
@@ -102,7 +101,7 @@ public class PatientActivity extends Activity implements MeshStateListener{
                 TextView patientList = (TextView) findViewById(R.id.user_profile_name);
                 patientList.append("Peer Id: " + peerUuid + "\n" + data + "\n\n");
             }
-        } else */if (args[0].equals("getInfo")) {
+        } else if (args[0].equals("getInfo")) {
             try {
                 mm.sendDataReliable(event.peerUuid, PORT, ("receiveInfo;sam" + ";patient;").getBytes());
             } catch (RightMeshException re) {}
@@ -123,9 +122,8 @@ public class PatientActivity extends Activity implements MeshStateListener{
 
         } else if (event.state == REMOVED){
             users.remove(event.peerUuid);
-            userInfo.remove(event.peerUuid);
+            //userInfo.remove(event.peerUuid);
         }
-
 
         String output = "";
         for (MeshID user : users) {
