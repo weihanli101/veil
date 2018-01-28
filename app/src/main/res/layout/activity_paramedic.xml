@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/email_sign_in_button"
+            android:id="@+id/btnConfigurePar"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginLeft="10dp"
