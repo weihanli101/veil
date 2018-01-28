@@ -22,7 +22,9 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/icon_app"/>
+            android:enabled="false"
+            android:onClick="configurePar"
+            android:text="Config" />
 
         <ProgressBar
             android:id="@+id/login_progress"
