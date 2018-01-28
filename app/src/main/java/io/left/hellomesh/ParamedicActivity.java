@@ -124,13 +124,17 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
             String role = args[2];
 
             if (role.equals("patient")) {
+                final String bloodType = args[3];
+                final String condition = args[4];
+                final String gender = args[5];
+
                 userInfo.put(event.peerUuid, new UserInfo(name, role));
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         TextView patientList = (TextView) findViewById(R.id.patient1);
-                        patientList.setText("Patient: "+  name);
+                        patientList.setText("Patient: "+  name + "\nBlood Type: " + bloodType + "\nCondition: " + condition  + "\nGender: " + gender);
                         //patientList.append("Peer Id: " + event.peerUuid + "\n" + new String(event.data) + "\n\n");
                         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         Ringtone r = RingtoneManager.getRingtone(ParamedicActivity.this, notification);

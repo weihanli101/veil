@@ -100,12 +100,13 @@ public class PatientActivity extends Activity implements MeshStateListener{
             if (role.equals("paramedic")) {
                 userInfo.put(event.peerUuid, new PatientActivity.UserInfo(name, role));
 
-                TextView patientList = (TextView) findViewById(R.id.user_profile_name);
+                TextView patientList =
+                        (TextView) findViewById(R.id.user_profile_name);
                 patientList.append("Peer Id: " + peerUuid + "\n" + data + "\n\n");
             }
         } else if (args[0].equals("getInfo")) {
             try {
-                mm.sendDataReliable(event.peerUuid, PORT, ("receiveInfo;Joe Doe" + ";patient;").getBytes());
+                mm.sendDataReliable(event.peerUuid, PORT, ("receiveInfo;Joe Doe;patient;A+;Skin Cancer;Male").getBytes());
             } catch (RightMeshException re) {}
         }
     }
