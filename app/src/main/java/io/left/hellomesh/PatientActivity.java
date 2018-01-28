@@ -91,6 +91,8 @@ public class PatientActivity extends Activity implements MeshStateListener{
         String[] args = data.split(";");
         System.out.println("event from Paramedic: " + event.data);
 
+        
+
        if (args[0].equals("receiveInfo")) {
             String name = args[1];
             String role = args[2];
@@ -103,7 +105,7 @@ public class PatientActivity extends Activity implements MeshStateListener{
             }
         } else if (args[0].equals("getInfo")) {
             try {
-                mm.sendDataReliable(event.peerUuid, PORT, ("receiveInfo;sam" + ";patient;").getBytes());
+                mm.sendDataReliable(event.peerUuid, PORT, ("receiveInfo;Joe Doe" + ";patient;").getBytes());
             } catch (RightMeshException re) {}
         }
     }
