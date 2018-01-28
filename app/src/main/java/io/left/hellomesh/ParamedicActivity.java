@@ -18,6 +18,7 @@ import io.left.rightmesh.android.MeshService;
 import io.left.rightmesh.android.AndroidMeshManager;
 import io.left.rightmesh.mesh.MeshManager;
 import io.left.rightmesh.mesh.MeshStateListener;
+import io.left.rightmesh.util.MeshUtility;
 import io.left.rightmesh.util.RightMeshException;
 
 import io.reactivex.functions.Consumer;
@@ -156,6 +157,21 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         String output = "";
         for (MeshID user : users) {
            output += user;
+        }
+    }
+
+
+    /**
+     * Open mesh settings screen.
+     *
+     * @param v calling view
+     */
+    public void configure(View v)
+    {
+        try {
+            mm.showSettingsActivity();
+        } catch(RightMeshException ex) {
+            MeshUtility.Log(this.getClass().getCanonicalName(), "Service not connected");
         }
     }
 }
