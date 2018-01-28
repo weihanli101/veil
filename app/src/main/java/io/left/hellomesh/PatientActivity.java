@@ -1,15 +1,7 @@
 package io.left.hellomesh;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -26,7 +18,7 @@ import static io.left.rightmesh.mesh.MeshManager.DATA_RECEIVED;
 import static io.left.rightmesh.mesh.MeshManager.PEER_CHANGED;
 import static io.left.rightmesh.mesh.MeshManager.REMOVED;
 
-public class PatientActivity extends AppCompatActivity implements MeshStateListener{
+public class PatientActivity extends Activity implements MeshStateListener{
     private class UserInfo {
         String name;
         String role;
@@ -38,8 +30,6 @@ public class PatientActivity extends AppCompatActivity implements MeshStateListe
     }
 
     private static final int PORT = 9876;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
 
     // MeshManager instance - interface to the mesh network.
     AndroidMeshManager mm = null;
@@ -51,10 +41,6 @@ public class PatientActivity extends AppCompatActivity implements MeshStateListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
 
         mm = AndroidMeshManager.getInstance(PatientActivity.this, PatientActivity.this);
     }
@@ -106,7 +92,7 @@ public class PatientActivity extends AppCompatActivity implements MeshStateListe
         String[] args = data.split(";");
         System.out.println("event from Paramedic: " + event.data);
 
-        if (args[0].equals("receiveInfo")) {
+       /* if (args[0].equals("receiveInfo")) {
             String name = args[1];
             String role = args[2];
 
@@ -116,9 +102,9 @@ public class PatientActivity extends AppCompatActivity implements MeshStateListe
                 TextView patientList = (TextView) findViewById(R.id.user_profile_name);
                 patientList.append("Peer Id: " + peerUuid + "\n" + data + "\n\n");
             }
-        } else if (args[0].equals("getInfo")) {
+        } else */if (args[0].equals("getInfo")) {
             try {
-                mm.sendDataReliable(event.peerUuid, PORT, "receiveInfo;andy;patient;".getBytes());
+                mm.sendDataReliable(event.peerUuid, PORT, ("receiveInfo;sam" + ";patient;").getBytes());
             } catch (RightMeshException re) {}
         }
     }
@@ -127,9 +113,9 @@ public class PatientActivity extends AppCompatActivity implements MeshStateListe
     private void handlePeerChanged(MeshManager.RightMeshEvent e) {
         // Update peer list.
         MeshManager.PeerChangedEvent event = (MeshManager.PeerChangedEvent) e;
+        System.out.println("peer: " + String.valueOf(event.peerUuid));
         if (event.state != REMOVED && !users.contains(event.peerUuid)) {
             users.add(event.peerUuid);
-            System.out.println("peer: " + String.valueOf(event.peerUuid));
 
             try {
                 mm.sendDataReliable(event.peerUuid, PORT, "getInfo".getBytes());
@@ -154,64 +140,5 @@ public class PatientActivity extends AppCompatActivity implements MeshStateListe
         return true;
     }
 
-    public static class PlaceholderFragment extends Fragment {
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_patient, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-    }
 
 }

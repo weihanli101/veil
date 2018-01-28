@@ -1,5 +1,8 @@
 package io.left.hellomesh;
 
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 import android.app.Activity;
+import android.widget.Toast;
+
+import org.spongycastle.math.Primes;
 
 import io.left.rightmesh.id.MeshID;
 
@@ -51,9 +57,6 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         mm = AndroidMeshManager.getInstance(ParamedicActivity.this, ParamedicActivity.this);
     }
 
-    /**
-     * Called when activity is on screen.
-     */
     @Override
     protected void onResume() {
         try {
@@ -64,10 +67,6 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         }
     }
 
-    /**
-     * Called when the app is being closed (not just navigated away from). Shuts down
-     * the {@link AndroidMeshManager} instance.
-     */
     @Override
     protected void onDestroy() {
         try {
@@ -78,14 +77,6 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         }
     }
 
-
-    /**
-     * Called by the {@link MeshService} when the mesh state changes. Initializes mesh connection
-     * on first call.
-     *
-     * @param uuid our own user id on first detecting
-     * @param state state which indicates SUCCESS or an error code
-     */
     @Override
     public void meshStateChanged(MeshID uuid, int state) {
         if (state == MeshStateListener.SUCCESS) {
@@ -121,7 +112,10 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
         String data = new String(event.data);
         String[] args = data.split(";");
         System.out.println("event from Patient: " + data);
-
+        for (String arg: args
+             ) {
+            System.out.println(arg);
+        }
         if (args[0].equals("receiveInfo")) {
             String name = args[1];
             String role = args[2];
@@ -129,19 +123,29 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
             if (role.equals("patient")) {
                 userInfo.put(event.peerUuid, new UserInfo(name, role));
 
-                TextView patientList = (TextView) findViewById(R.id.patientData);
-                patientList.append("Peer Id: " + peerUuid + "\n" + data + "\n\n");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView patientList = (TextView) findViewById(R.id.patientData);
+                        patientList.append("Peer Id: " + event.peerUuid + "\n" + new String(event.data) + "\n\n");
+                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        Ringtone r = RingtoneManager.getRingtone(ParamedicActivity.this, notification);
+                        r.play();
+                    }
+                });
             }
         } else if (args[0].equals("getInfo")) {
             try {
                 mm.sendDataReliable(event.peerUuid, PORT, "receiveInfo;andy;paramedic;".getBytes());
             } catch (RightMeshException re) {}
         }
+
     }
 
     private void handlePeerChanged(MeshManager.RightMeshEvent e) {
         // Update peer list.
         MeshManager.PeerChangedEvent event = (MeshManager.PeerChangedEvent) e;
+        System.out.println("peer: " + String.valueOf(event.peerUuid));
         if (event.state != REMOVED && !users.contains(event.peerUuid)) {
             users.add(event.peerUuid);
             System.out.println("peer: " + String.valueOf(event.peerUuid));
