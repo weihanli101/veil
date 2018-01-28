@@ -27,7 +27,7 @@ import static io.left.rightmesh.mesh.MeshManager.REMOVED;
 
 public class MainActivity extends Activity implements MeshStateListener {
     // Port to bind app to.
-    private static final int HELLO_PORT = 9876;
+    private static final int PORT = 9876;
 
     // MeshManager instance - interface to the mesh network.
     AndroidMeshManager mm = null;
@@ -89,7 +89,7 @@ public class MainActivity extends Activity implements MeshStateListener {
             try {
                 // Binds this app to MESH_PORT.
                 // This app will now receive all events generated on that port.
-                mm.bind(HELLO_PORT);
+                mm.bind(PORT);
 
                 // Subscribes handlers to receive events from the mesh.
                 mm.on(DATA_RECEIVED, new Consumer() {
@@ -198,7 +198,7 @@ public class MainActivity extends Activity implements MeshStateListener {
             String msg = "Hello to: " + receiver + " from" + mm.getUuid();
             MeshUtility.Log(this.getClass().getCanonicalName(), "MSG: " + msg);
             byte[] testData = msg.getBytes();
-            mm.sendDataReliable(receiver, HELLO_PORT, testData);
+            mm.sendDataReliable(receiver, PORT, testData);
         }
     }
 
