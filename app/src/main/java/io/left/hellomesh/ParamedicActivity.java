@@ -104,6 +104,11 @@ public class ParamedicActivity extends Activity implements MeshStateListener {
 
     private void handleDataReceived(MeshManager.RightMeshEvent e) {
         final MeshManager.DataReceivedEvent event = (MeshManager.DataReceivedEvent) e;
+        String peerUuid = String.valueOf(event.peerUuid);
+        String data = new String(event.data);
+
+        TextView patientList = (TextView) findViewById(R.id.patientData);
+        patientList.append("Peer Id: " + peerUuid + "\n" + data + "\n\n");
     }
 
     private void handlePeerChanged(MeshManager.RightMeshEvent e) {

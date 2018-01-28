@@ -19,7 +19,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_paramedic" />
+    <include
+        android:id="@+id/patientData"
+        layout="@layout/content_paramedic" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
