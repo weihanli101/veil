@@ -2,7 +2,8 @@
 
 # Veil
 Winning Andriod application for 2018 Guelph Hacks: Improving Life Challange
-Best Use of RightMesh API Award
+--
+**Best Use of RightMesh API Award** 
 
 ## Project Intent
 Veil was made to solve the problem of providing health care information for inviduals or
@@ -19,6 +20,6 @@ RightMesh API: https://developer.rightmesh.io/api/
 Andriod Studio: https://developer.android.com/studio/index.html
 
 ## Authors
-**William Ngo** - *development* - [wkngo](https://github.com/wkngo)
-**Weihan Li** - *development* - [weihanli101](https://github.com/weihanli101)
-**Sean Chow** - *Project Idea* - [scseanchow](https://github.com/scseanchow)
+- **William Ngo** - *development* - [wkngo](https://github.com/wkngo)
+- **Weihan Li** - *development* - [weihanli101](https://github.com/weihanli101)
+- **Sean Chow** - *Project Idea* - [scseanchow](https://github.com/scseanchow)
