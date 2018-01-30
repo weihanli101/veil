@@ -1,7 +1,7 @@
 ![](https://github.com/weihanli101/veil/blob/master/app/src/main/res/drawable/logo.png)
 
 # Veil
-#### Winning Andriod application for 2018 Guelph Hacks: Improving Life Challange <br/>
+#### Winning Andriod application for 2018 Guelph Hacks: Improving Life Challenge <br/>
 **Best Use of RightMesh API Award** 
 
 ## Project Intent
