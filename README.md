@@ -1,45 +1,24 @@
-# Hello Mesh
-This is the simplest example app using the mesh framework - it shows how to discover other users 
-using the same app, send and receive data on the mesh and configure the role within the mesh 
-(forwarder or not, internet sharer or not)
+[![](https://github.com/weihanli101/veil/blob/master/app/src/main/res/drawable/logo.png)
 
-## How does it work?
-The RightMesh library has an autonomous networking layer which manages the connectivity between 
-devices using Wi-Fi, Bluetooth and Wi-Fi direct. It does this by linking together hotspots using
-our patent-pending switching technology.
+# Veil
+Winning Andriod application for 2018 Guelph Hacks: Improving Life Challange
+Best Use of RightMesh API Award
 
-In addition to helping the devices make the physical connections to each other, RightMesh implements
-a neighbour discovery protocol which allows devices to discover each other across many hops.
+## Project Intent
+Veil was made to solve the problem of providing health care information for inviduals or
+populations with poor internet access. We did this by using the [RightMesh's](https://developer.rightmesh.io/api/) API to
+allow P2P data transfer.
 
-As a developer you will receive events when other devices running the same app join the network
-(even if they are connected through devices which are running different apps). You will also receive
-an event when data is received from another device running the same app as you. 
+##How it Works
+Using the RightMesh API we instantiated the transfer of EMR (Electronic Medical Records) through Bluetooth as a proof of concept. Two separate accounts are made. One given a paramedic role which polls for patients and the second being a patient role with sends out information. The aims is that the paramedic can review a patients EMR while travelling and then can provide immediate triage. In the future we hope to add a hospital role which will allow medical information to be stored on a person’s phone (when the person is visiting the hospital) then transferred to others through P2P (when the person returns to their limited internet access area).
 
-RightMesh abstracts away the idea of IPv4, IPv6 addresses, MAC addresses etc., since any given
-device may have any number of connections into the mesh at a given moment. Instead every device has
-a MeshID which is used in place of these other types of addresses. 
 
-The MeshID is actually an Ethereum compatible account which will be used very soon to keep track
-of how much data has been forwarded and received so that people can be incentivized to use the mesh.
+## Technologies Used
+RightMesh boilerplate: https://github.com/RightMesh/HelloMesh
+RightMesh API: https://developer.rightmesh.io/api/
+Andriod Studio: https://developer.android.com/studio/index.html
 
-You can send byte arrays of data to other mesh devices and RightMesh will handle reliable
-communication for you. While the library does it's best to ensure connectivity to as many devices
-as possible at all times, the mobile nature of the devices means they may disconnect from each other
-. RightMesh implements networking layers to handle this enabling reliable congestion-aware end-to-end
-communications. Compared to similar libraries, RightMesh does not broadcast to all other devices in
-the mesh, it actually forms paths and performs routing using this two-layer system.
-
-For the developer, this means when they issue a send call, they can trust that the data will be
-received on the other side, even when the network grows in size, and despite the mobile nature of
-the devices.
-
-## Documentation
-Our API reference is available at [https://developer.rightmesh.io/api/](https://developer.rightmesh.io/api/)
-
-A detailed step-by-step breakdown of how to get started can be found in our reference guide: [https://developer.rightmesh.io/reference/](https://developer.rightmesh.io/reference/)
-
-In order for this sample app to work, you need to obtain RightMesh developer account, and API key
-from our developer website: [https://developer.rightmesh.io/](developer.rightmesh.io)
-
-Set your username, password and key in the app [build.gradle](app/build.gradle) file. The main
-source code is available in [MainActivity.java](app/src/main/java/io/left/hellomesh/MainActivity.java)
+## Authors
+**William Ngo** - *development* - [wkngo](https://github.com/wkngo)
+**Weihan Li** - *development* - [weihanli101](https://github.com/weihanli101)
+**Sean Chow** - *Project Idea* - [scseanchow](https://github.com/scseanchow)
