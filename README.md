@@ -23,4 +23,9 @@ Andriod Studio: https://developer.android.com/studio/index.html
 ## Authors
 - **William Ngo** - *development* - [wkngo](https://github.com/wkngo)
 - **Weihan Li** - *development* - [weihanli101](https://github.com/weihanli101)
-- **Sean Chow** - *Project Idea* - [scseanchow](https://github.com/scseanchow)
+- **Sean Chow** - *project design* - [scseanchow](https://github.com/scseanchow)
+
+
+### Slide Deck
+View the slide deck for the pitch
+https://uoguelphca-my.sharepoint.com/:p:/r/personal/schow04_uoguelph_ca/Documents/veil_improvelifechallenge.pptx?d=w09c00eddf7974ee7aa085ce013cf3c76&csf=1&e=lUCqkU
